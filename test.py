@@ -115,6 +115,8 @@ for i in range(len(X_windows_test)):
         pred.append(col_sum / y_pred_window.shape[0])
     y_pred_one_hot.append(np.array(pred))
 y_pred = decode_one_hot(y_pred_one_hot)
+print("y_pred_one_hot:{}", y_pred_one_hot)
+print("y_pred:{}", y_pred)
 
 # 输出模型评估指标
 count = sum(x == y for x, y in zip(y_pred, decode_one_hot(y_test)))
