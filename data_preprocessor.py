@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import scipy.signal as sig
+from sklearn.preprocessing import MinMaxScaler
 
 
 # 时频域对齐
@@ -58,4 +59,16 @@ def pretreat():
     # 标准化数据，将数据缩放到0-1之间
     hourly_data = (hourly_data - hourly_data.min()) / (hourly_data.max() - hourly_data.min())
     return hourly_data
+
+
+def pretreat_2():
+    data = pd.read_csv('data.csv')
+
+    # 删除缺失值
+    data.dropna(inplace=True)
+    data.drop_duplicates(inplace=True)
+
+    # 对数据进行标准化
+    scaler = MinMaxScaler()
+    df_scaled = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
 
