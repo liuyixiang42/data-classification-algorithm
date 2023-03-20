@@ -72,3 +72,5 @@ def pretreat_2():
     scaler = MinMaxScaler()
     df_scaled = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
 
+    return df_scaled
+
