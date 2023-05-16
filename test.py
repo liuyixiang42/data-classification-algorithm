@@ -9,6 +9,7 @@ from keras.layers import Dense, LSTM, Dropout
 from keras.regularizers import l2
 from sklearn.preprocessing import StandardScaler
 from keras.optimizers import RMSprop
+import time
 
 
 def decode_one_hot(arr):
@@ -97,11 +98,15 @@ optimizer = RMSprop(lr=0.001, rho=0.9)
 
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
+start_time = time.time()
 # 训练模型
 n_windows = X_windows_train[0].shape[0]
 for i in range(n_windows):
     print(f'Training window {i + 1}/{n_windows}')
-    model.fit(X_windows_train[i], y_windows_train[i], epochs=100, batch_size=32, verbose=0)
+    model.fit(X_windows_train[i], y_windows_train[i], epochs=60, batch_size=32, verbose=0)
+
+end_time = time.time()
+train_time = end_time - start_time
 
 # 预测测试集的结果
 y_pred_one_hot = []
@@ -121,4 +126,5 @@ print("y_pred:{}", y_pred)
 # 输出模型评估指标
 count = sum(x == y for x, y in zip(y_pred, decode_one_hot(y_test)))
 print(f'Accuracy: {count/len(y_pred)}')
+print(train_time)
 
